@@ -1,4 +1,4 @@
-:- consult('kb.pl').
+:- consult('kb').
 
 % Part 1: How many holders, direct and indirect
 holds(A, B) :- contains(A, B, _).

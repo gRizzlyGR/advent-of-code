@@ -17,7 +17,7 @@ i.e the bag container, the bag contained, and how many bags of the same kind are
 
 First, create the knowledge base:
 ```bash
-go run main.go < input > kb.pl
+go run main.go < input > kb
 ```
 
 Then, fire up prolog:
