@@ -8,10 +8,7 @@ import (
 )
 
 func main() {
-
-	// scanner := bufio.NewScanner(os.Stdin)
-	file, _ := os.Open("../input")
-	scanner := bufio.NewScanner(file)
+	scanner := bufio.NewScanner(os.Stdin)
 	bagPattern := "bag(color(%s))"
 	containsPattern := "contains(%s, %s, %s)."
 
