@@ -9,6 +9,16 @@ import (
 
 type counter map[byte]int
 
+func initCounters(size int) []counter {
+	counters := make([]counter, size)
+
+	for i := 0; i < size; i++ {
+		counters[i] = make(counter)
+	}
+
+	return counters
+}
+
 func buildRates(counters []counter) ([]byte, []byte) {
 	size := len(counters)
 	gamma := make([]byte, size)
@@ -48,17 +58,12 @@ func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	var counters []counter
-	var size int
 
 	for scanner.Scan() {
 		report := scanner.Bytes()
 
 		if counters == nil {
-			size = len(report)
-			counters = make([]counter, size)
-			for i := 0; i < size; i++ {
-				counters[i] = make(map[byte]int)
-			}
+			counters = initCounters(len(report))
 		}
 
 		for i, bit := range report {
