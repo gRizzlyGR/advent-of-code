@@ -1,4 +1,4 @@
-module aoc2021d4p1
+module aoc2021d4p2
 
 require bingo v0.0.0
 

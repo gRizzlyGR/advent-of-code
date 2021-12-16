@@ -39,9 +39,9 @@ func BuildRow(upRow Row, numbers []int) Row {
 	return row
 }
 
-func (b *Row) String() string {
+func (r *Row) String() string {
 	var s string
-	for _, cell := range *b {
+	for _, cell := range *r {
 		s += fmt.Sprintf("%d ", cell.number)
 	}
 

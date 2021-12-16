@@ -11,43 +11,51 @@ type Cell struct {
 	marked bool
 }
 
-func (n *Cell) String() string {
+func (c *Cell) String() string {
 	leftCell, rightCell, upCell, downCell := -1, -1, -1, -1
-	if n.left != nil {
-		leftCell = n.left.number
+	if c.left != nil {
+		leftCell = c.left.number
 	}
 
-	if n.right != nil {
-		rightCell = n.right.number
+	if c.right != nil {
+		rightCell = c.right.number
 	}
 
-	if n.up != nil {
-		upCell = n.up.number
+	if c.up != nil {
+		upCell = c.up.number
 	}
 
-	if n.down != nil {
-		downCell = n.down.number
+	if c.down != nil {
+		downCell = c.down.number
 	}
 
-	s := fmt.Sprintf("\t%d\n", upCell) + fmt.Sprintf("%d\t%d\t%d\n", leftCell, n.number, rightCell) + fmt.Sprintf("\t%d\n", downCell)
+	s := fmt.Sprintf("\t%d\n", upCell) + fmt.Sprintf("%d\t%d\t%d\n", leftCell, c.number, rightCell) + fmt.Sprintf("\t%d\n", downCell)
 
 	return s
 }
 
-func (b *Cell) Mark() {
-	b.marked = true
+func (c *Cell) Mark() {
+	c.marked = true
 }
 
-func (b *Cell) findInColumn() Bingo {
+func (c *Cell) IsMarked() bool {
+	return c.marked
+}
+
+func (c *Cell) Number() int {
+	return c.number
+}
+
+func (c *Cell) FindInColumn() Bingo {
 	bingo := make(Bingo)
-	next := b
+	next := c
 
 	for next != nil && next.marked {
 		bingo[next.number] = struct{}{}
 		next = next.up
 	}
 
-	next = b
+	next = c
 
 	for next != nil && next.marked {
 		bingo[next.number] = struct{}{}
@@ -57,16 +65,16 @@ func (b *Cell) findInColumn() Bingo {
 	return bingo
 }
 
-func (b *Cell) findInRow() Bingo {
+func (c *Cell) FindInRow() Bingo {
 	bingo := make(Bingo)
-	next := b
+	next := c
 
 	for next != nil && next.marked {
 		bingo[next.number] = struct{}{}
 		next = next.left
 	}
 
-	next = b
+	next = c
 
 	for next != nil && next.marked {
 		bingo[next.number] = struct{}{}
@@ -76,14 +84,14 @@ func (b *Cell) findInRow() Bingo {
 	return bingo
 }
 
-func (b *Cell) findBingo() Bingo {
-	bingo := b.findInColumn()
+func (c *Cell) FindBingo() Bingo {
+	bingo := c.FindInColumn()
 
 	if len(bingo) == 5 {
 		return bingo
 	}
 
-	bingo = b.findInRow()
+	bingo = c.FindInRow()
 
 	if len(bingo) == 5 {
 		return bingo

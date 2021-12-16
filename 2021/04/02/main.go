@@ -7,14 +7,25 @@ import (
 )
 
 func draw(draws []int, maps []bingo.Map) (int, bingo.Bingo, bingo.Map) {
+	wins := make(map[int]struct{})
+
 	for _, draw := range draws {
-		for _, m := range maps {
+		for i, m := range maps {
 			if cell, ok := m[draw]; ok {
 				cell.Mark()
 				bingo := cell.FindBingo()
 
 				if bingo != nil {
-					return cell.Number(), bingo, m
+					// Record if a board has won, just once
+					if _, ok := wins[i]; !ok {
+						wins[i] = struct{}{}
+					}
+
+					// If all boards have won at least once, return the current
+					// one
+					if len(wins) == len(maps) {
+						return cell.Number(), bingo, m
+					}
 				}
 			}
 		}
